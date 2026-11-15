@@ -142,12 +142,23 @@ nav {
     border-bottom: 1px solid var(--color-linea);
 }
 
+.boton-menu {
+    display: block;
+    margin: 0 auto;
+    font-weight: 600;
+}
+
 nav ul {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
+    display: none;
+    flex-direction: column;
+    align-items: center;
     list-style: none;
     gap: 8px;
+    margin-top: 8px;
+}
+
+nav ul.mostrar {
+    display: flex;
 }
 
 nav a {
@@ -239,19 +250,21 @@ body:has(#modo-oscuro:checked) .enlace-whatsapp {
     margin: 15px 0 25px;
 }
 
-.categorias a {
-    display: block;
+.filtro-categoria {
     padding: 6px 14px;
     border-radius: 20px;
     background-color: var(--color-superficie-alt);
     color: var(--color-texto);
-    text-decoration: none;
+    border: none;
     font-size: 13px;
+    min-height: 36px;
     transition: background-color 0.2s ease;
 }
 
-.categorias a:hover {
+.filtro-categoria:hover,
+.filtro-categoria.activo {
     background-color: var(--color-superficie-hover);
+    font-weight: 600;
 }
 
 /* 12. Organizo las tarjetas con Grid y dejo una columna para celulares. */
@@ -269,6 +282,10 @@ body:has(#modo-oscuro:checked) .enlace-whatsapp {
     padding: 15px;
     background-color: var(--color-superficie);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.producto[hidden] {
+    display: none;
 }
 
 .producto:hover {
@@ -514,6 +531,7 @@ body:has(#carrito-flotante[open]) {
 .carrito-flotante [hidden] {
     display: none !important;
 }
+
 /* 17. Muestro el QR y el resumen del pedido confirmado. */
 .panel-pago-qr {
     position: relative;
@@ -581,6 +599,17 @@ footer {
 
 /* 19. Desde 600px acomodo el contenido para tablets. */
 @media screen and (min-width: 600px) {
+    .boton-menu {
+        display: none;
+    }
+
+    nav ul {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        margin-top: 0;
+    }
+
     .bienvenida {
         flex-direction: row;
         align-items: center;
