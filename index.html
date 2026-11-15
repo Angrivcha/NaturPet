@@ -31,7 +31,10 @@
 
     <!-- 2. Agrego enlaces para moverse por las secciones. -->
     <nav aria-label="Menú principal">
-        <ul>
+        <button type="button" id="boton-menu" class="boton-menu" aria-expanded="false" aria-controls="lista-menu">
+            ☰ Menú
+        </button>
+        <ul id="lista-menu">
             <li><a href="#nosotros">NOSOTROS</a></li>
             <li><a href="#productos">PRODUCTOS</a></li>
             <li><a href="#carrito">CARRITO (<span id="contador-carrito">0</span>)</a></li>
@@ -60,10 +63,11 @@
 
             <h3>Categorías</h3>
             <ul class="categorias">
-                <li><a href="#alimentos">Alimentos</a></li>
-                <li><a href="#accesorios">Accesorios</a></li>
-                <li><a href="#juguetes">Juguetes</a></li>
-                <li><a href="#higiene">Higiene</a></li>
+                <li><button type="button" class="filtro-categoria activo" data-categoria="todos">Todos</button></li>
+                <li><button type="button" class="filtro-categoria" data-categoria="alimentos">Alimentos</button></li>
+                <li><button type="button" class="filtro-categoria" data-categoria="accesorios">Accesorios</button></li>
+                <li><button type="button" class="filtro-categoria" data-categoria="juguetes">Juguetes</button></li>
+                <li><button type="button" class="filtro-categoria" data-categoria="higiene">Higiene</button></li>
             </ul>
 
             <div class="lista-productos">
