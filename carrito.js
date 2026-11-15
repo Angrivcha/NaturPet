@@ -5,6 +5,11 @@ const imagenQrPago = 'imagenes/qr-yape.jpeg';
 
 // 2. Elementos que voy a actualizar en la página
 // Los busco una sola vez usando los id del HTML.
+const botonMenu = document.getElementById('boton-menu');
+const listaMenu = document.getElementById('lista-menu');
+const botonesFiltro = document.querySelectorAll('.filtro-categoria');
+const tarjetasProductos = document.querySelectorAll('.producto');
+
 const botonesAgregar = document.querySelectorAll('.agregar-carrito');
 const listaCarrito = document.getElementById('lista-carrito');
 const contadorCarrito = document.getElementById('contador-carrito');
@@ -59,7 +64,24 @@ const finalizarCompra = document.getElementById('finalizar-compra');
 const contactoWhatsApp = document.querySelector('#contacto .enlace-whatsapp');
 const catalogoProductos = document.getElementById('productos');
 
-// 3. Funciones para dibujar los productos
+// 3. Funciones para el menú responsivo y filtro de categorías
+function alternarMenu() {
+    const abierto = listaMenu.classList.toggle('mostrar');
+    botonMenu.setAttribute('aria-expanded', abierto);
+    botonMenu.textContent = abierto ? '✕ Cerrar' : '☰ Menú';
+}
+
+function filtrarProductos(categoria) {
+    tarjetasProductos.forEach(function (tarjeta) {
+        if (categoria === 'todos' || tarjeta.dataset.categoria === categoria) {
+            tarjeta.hidden = false;
+        } else {
+            tarjeta.hidden = true;
+        }
+    });
+}
+
+// 4. Funciones para dibujar los productos
 // Uso esta función para escribir todos los precios de la misma forma.
 function mostrarPrecio(importe) {
     return 'S/ ' + importe.toFixed(2);
@@ -157,7 +179,7 @@ function mostrarCarrito() {
     actualizarMetodoPago();
 }
 
-// 4. Funciones para agregar, cambiar cantidades y vaciar
+// 5. Funciones para agregar, cambiar cantidades y vaciar
 function agregarProducto(boton) {
     const id = boton.dataset.id;
     let productoEncontrado = false;
@@ -218,13 +240,16 @@ function cambiarCantidad(id, accion, ubicacion) {
 }
 
 function vaciarProductos() {
+    if (!confirm('¿Seguro que quieres vaciar todo el carrito?')) {
+        return;
+    }
     carrito = [];
     mostrarCarrito();
     mensajeCarrito.textContent = 'Vaciaste el carrito.';
     tituloCarrito.focus();
 }
 
-// 5. Funciones de la ventana y los pasos de compra
+// 6. Funciones de la ventana y los pasos de compra
 function abrirVentanaCarrito() {
     if (!ventanaCarrito.open) {
         ventanaCarrito.showModal();
@@ -320,7 +345,7 @@ function revisarPedido(evento) {
     tituloRevision.focus();
 }
 
-// 6. Confirmación y mensaje para WhatsApp
+// 7. Confirmación y mensaje para WhatsApp
 function crearResumenPedido() {
     let resumen = resumenCliente.textContent + '\n';
     carrito.forEach(function (producto) {
@@ -360,7 +385,27 @@ function completarPedido() {
     tituloConfirmacion.focus();
 }
 
-// 7. Acciones que se ejecutan al usar los botones y el formulario
+// 8. Acciones que se ejecutan al usar los botones y el formulario
+botonMenu.addEventListener('click', alternarMenu);
+
+listaMenu.querySelectorAll('a').forEach(function (enlace) {
+    enlace.addEventListener('click', function () {
+        listaMenu.classList.remove('mostrar');
+        botonMenu.setAttribute('aria-expanded', 'false');
+        botonMenu.textContent = '☰ Menú';
+    });
+});
+
+botonesFiltro.forEach(function (boton) {
+    boton.addEventListener('click', function () {
+        botonesFiltro.forEach(function (item) {
+            item.classList.remove('activo');
+        });
+        boton.classList.add('activo');
+        filtrarProductos(boton.dataset.categoria);
+    });
+});
+
 botonesAgregar.forEach(function (boton) {
     boton.addEventListener('click', function () {
         agregarProducto(boton);
@@ -410,6 +455,6 @@ finalizarCompra.addEventListener('click', function () {
     catalogoProductos.scrollIntoView({ block: 'start' });
 });
 
-// 8. Estado inicial de la página
+// 9. Estado inicial de la página
 abrirCarritoFlotante.hidden = false;
 mostrarCarrito();
