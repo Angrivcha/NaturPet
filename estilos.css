@@ -1,4 +1,4 @@
-/* 1. Quito los márgenes iniciales y hago que el tamaño incluya borde y relleno. */
+/* Esta parte quita los espacios que vienen por defecto en la página. */
 *,
 *::before,
 *::after {
@@ -7,60 +7,24 @@
     box-sizing: border-box;
 }
 
-/* 2. Guardo los colores aquí para poder cambiarlos en toda la página. */
-:root {
-    --color-fondo: #faf8f4;
-    --color-texto: #273b48;
-    --color-texto-secundario: #536b7a;
-    --color-primario: #315b76;
-    --color-primario-hover: #24465d;
-    --color-acento: #b56929;
-    --color-borde: #c7d4dc;
-    --color-linea: #e5dfd4;
-    --color-superficie: #ffffff;
-    --color-superficie-alt: #eee7da;
-    --color-superficie-hover: #eddbb7;
-    --color-pie: #dce6ed;
-    --color-fondo-imagen: #f3eee7;
-    --fuente-principal: 'Poppins', Arial, sans-serif;
-}
-
-/* Cambio los colores cuando se activa el modo oscuro. */
-body:has(#modo-oscuro:checked) {
-    color-scheme: dark;
-    --color-fondo: #202629;
-    --color-texto: #f1ede5;
-    --color-texto-secundario: #bfcbd2;
-    --color-primario: #a9cee5;
-    --color-primario-hover: #c7e3f3;
-    --color-borde: #63727b;
-    --color-linea: #333d43;
-    --color-superficie: #333d43;
-    --color-superficie-alt: #333d43;
-    --color-superficie-hover: #495a64;
-    --color-pie: #293840;
-    --color-fondo-imagen: #293840;
-}
-
-/* 3. Configuro el desplazamiento y la distribución general. */
+/* Aquí coloco los estilos generales de la página, como la letra, el fondo y los espacios. */
 html {
     scroll-padding-top: 15px;
     scroll-behavior: smooth;
 }
 
 body {
-    font-family: var(--fuente-principal);
+    font-family: 'Poppins', Arial, sans-serif;
     line-height: 1.6;
-    color: var(--color-texto);
-    background-color: var(--color-fondo);
+    color: #273b48;
+    background-color: #faf8f4;
     min-height: 100vh;
-    padding-bottom: 85px; /* Dejo espacio para el botón flotante. */
+    padding-bottom: 85px; 
     display: flex;
     flex-direction: column;
-    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* 4. Ajusto las imágenes y el tamaño de los textos. */
+/* Aquí defino el tamaño de las imágenes, los títulos y los párrafos. */
 img {
     max-width: 100%;
     height: auto;
@@ -86,7 +50,7 @@ p {
     margin-bottom: 12px;
 }
 
-/* 5. Hago que el encabezado aparezca con un movimiento suave. */
+/* Esta parte hace que el encabezado aparezca suavemente al abrir la página. */
 @keyframes aparecerSuave {
     0% {
         opacity: 0;
@@ -98,9 +62,9 @@ p {
     }
 }
 
-/* 6. Organizo el logo, el nombre y el botón del modo oscuro. */
+/* Aquí doy estilo a la parte superior, donde están el logo y el nombre de la página. */
 header {
-    background-color: var(--color-fondo);
+    background-color: #faf8f4;
     padding: 20px 15px 10px;
     text-align: center;
     animation: aparecerSuave 0.8s ease-out;
@@ -120,26 +84,14 @@ header img {
     justify-content: center;
     gap: 15px;
     text-decoration: none;
-    color: var(--color-primario);
+    color: #315b76;
 }
 
-.control-tema {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 10px;
-    padding: 6px 12px;
-    border: 1px solid var(--color-borde);
-    border-radius: 20px;
-    font-size: 13px;
-    cursor: pointer;
-}
-
-/* 7. Coloco los enlaces del menú uno al lado del otro con Flexbox. */
+/* Esta parte organiza el menú de navegación y sus enlaces. */
 nav {
-    background-color: var(--color-fondo);
+    background-color: #faf8f4;
     padding: 8px;
-    border-bottom: 1px solid var(--color-linea);
+    border-bottom: 1px solid #e5dfd4;
 }
 
 .boton-menu {
@@ -165,24 +117,24 @@ nav a {
     display: block;
     padding: 8px 12px;
     font-size: 13px;
-    color: var(--color-texto);
+    color: #273b48;
     text-decoration: none;
     font-weight: 600;
     transition: color 0.2s ease, transform 0.2s ease;
 }
 
 nav a:hover {
-    color: var(--color-primario);
+    color: #315b76;
     transform: translateY(-2px);
 }
 
 a:focus-visible,
 button:focus-visible {
-    outline: 3px solid var(--color-acento);
+    outline: 3px solid #b56929;
     outline-offset: 3px;
 }
 
-/* 8. Limito el ancho del contenido y separo las secciones. */
+/* Aquí acomodo el contenido principal y dejo espacio entre las secciones. */
 main {
     flex: 1;
     width: 90%;
@@ -194,7 +146,7 @@ main section {
     margin-bottom: 45px;
 }
 
-/* 9. Organizo el texto y la imagen de bienvenida. */
+/* Esta parte organiza el texto y la imagen de bienvenida. */
 .bienvenida {
     display: flex;
     flex-direction: column;
@@ -210,14 +162,14 @@ main section {
     transform: scale(1.02);
 }
 
-/* 10. Doy un estilo común a los botones y enlaces destacados. */
+/* Aquí doy el mismo estilo a los botones principales de la página. */
 .enlace-productos,
 .enlace-whatsapp,
 .agregar-carrito {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background-color: var(--color-primario);
+    background-color: #315b76;
     color: #ffffff;
     padding: 10px 18px;
     border-radius: 24px;
@@ -231,17 +183,12 @@ main section {
 .enlace-productos:hover,
 .enlace-whatsapp:hover,
 .agregar-carrito:hover {
-    background-color: var(--color-primario-hover);
+    background-color: #24465d;
     transform: translateY(-2px);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
-body:has(#modo-oscuro:checked) .enlace-productos,
-body:has(#modo-oscuro:checked) .enlace-whatsapp {
-    color: #202629;
-}
-
-/* 11. Muestro las categorías en una fila que puede ocupar varias líneas. */
+/* Esta parte muestra las categorías y los botones para filtrar productos. */
 .categorias {
     display: flex;
     flex-wrap: wrap;
@@ -253,8 +200,8 @@ body:has(#modo-oscuro:checked) .enlace-whatsapp {
 .filtro-categoria {
     padding: 6px 14px;
     border-radius: 20px;
-    background-color: var(--color-superficie-alt);
-    color: var(--color-texto);
+    background-color: #eee7da;
+    color: #273b48;
     border: none;
     font-size: 13px;
     min-height: 36px;
@@ -263,24 +210,24 @@ body:has(#modo-oscuro:checked) .enlace-whatsapp {
 
 .filtro-categoria:hover,
 .filtro-categoria.activo {
-    background-color: var(--color-superficie-hover);
+    background-color: #eddbb7;
     font-weight: 600;
 }
 
-/* 12. Organizo las tarjetas con Grid y dejo una columna para celulares. */
+/* Aquí organizo las tarjetas de los productos con sus imágenes, nombres y precios. */
 .lista-productos {
     display: grid;
-    grid-template-columns: 1fr; /* Empiezo con una columna en celulares. */
+    grid-template-columns: 1fr; 
     gap: 25px;
 }
 
 .producto {
     display: flex;
     flex-direction: column;
-    border: 1px solid var(--color-borde);
+    border: 1px solid #c7d4dc;
     border-radius: 20px;
     padding: 15px;
-    background-color: var(--color-superficie);
+    background-color: #ffffff;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -297,7 +244,7 @@ body:has(#modo-oscuro:checked) .enlace-whatsapp {
     border-radius: 14px;
     aspect-ratio: 3 / 2;
     object-fit: contain;
-    background-color: var(--color-fondo-imagen);
+    background-color: #f3eee7;
 }
 
 .producto-info {
@@ -309,40 +256,40 @@ body:has(#modo-oscuro:checked) .enlace-whatsapp {
 
 .categoria-producto {
     font-size: 12px;
-    color: var(--color-texto-secundario);
+    color: #536b7a;
     margin-bottom: 4px;
 }
 
 .precio {
     font-weight: 700;
     font-size: 18px;
-    color: var(--color-primario);
+    color: #315b76;
     margin-top: auto;
     margin-bottom: 12px;
 }
 
-/* 13. Hago que los íconos usen el color de su enlace. */
+/* Esta parte sirve para dar color a los íconos de la página. */
 .icono-svg {
     fill: currentColor;
     flex-shrink: 0;
 }
 
-/* 14. Organizo los productos y controles del carrito de la página. */
+/* Aquí doy estilo a los botones y a la lista de productos del carrito. */
 button {
     font-family: inherit;
     font-size: 14px;
     padding: 8px 14px;
     min-height: 40px;
-    border: 1px solid var(--color-borde);
+    border: 1px solid #c7d4dc;
     border-radius: 20px;
-    background-color: var(--color-superficie);
-    color: var(--color-primario);
+    background-color: #ffffff;
+    color: #315b76;
     cursor: pointer;
     transition: background-color 0.2s ease;
 }
 
 button:hover {
-    background-color: var(--color-superficie-alt);
+    background-color: #eee7da;
 }
 button:disabled {
     opacity: 0.5;
@@ -359,7 +306,7 @@ button:disabled {
     flex-direction: column;
     gap: 12px;
     padding: 15px 0;
-    border-bottom: 1px solid var(--color-borde);
+    border-bottom: 1px solid #c7d4dc;
 }
 
 .controles-cantidad {
@@ -373,7 +320,7 @@ button:disabled {
     font-size: 18px;
 }
 
-/* 15. Fijo el botón del carrito y doy forma a la ventana flotante. */
+/* Esta parte sirve para mostrar el botón flotante y la ventana del carrito. */
 .boton-carrito-flotante {
     position: fixed;
     right: max(16px, env(safe-area-inset-right));
@@ -383,8 +330,8 @@ button:disabled {
     align-items: center;
     gap: 8px;
     padding: 14px 20px;
-    background-color: var(--color-primario);
-    color: var(--color-fondo);
+    background-color: #315b76;
+    color: #faf8f4;
     box-shadow: 0 6px 24px rgba(0, 0, 0, 0.22);
     font-weight: 600;
 }
@@ -392,7 +339,7 @@ button:disabled {
     display: none;
 }
 .boton-carrito-flotante:hover {
-    background-color: var(--color-primario-hover);
+    background-color: #24465d;
 }
 body:has(#carrito-flotante[open]) {
     overflow: hidden;
@@ -402,10 +349,10 @@ body:has(#carrito-flotante[open]) {
     width: min(540px, calc(100% - 24px));
     max-height: calc(100dvh - 32px);
     padding: 0;
-    border: 1px solid var(--color-borde);
+    border: 1px solid #c7d4dc;
     border-radius: 22px;
-    background: var(--color-superficie);
-    color: var(--color-texto);
+    background: #ffffff;
+    color: #273b48;
     box-shadow: 0 20px 70px rgba(0, 0, 0, 0.25);
 }
 .carrito-flotante[open] {
@@ -421,7 +368,7 @@ body:has(#carrito-flotante[open]) {
     align-items: flex-start;
     gap: 12px;
     padding: 20px;
-    border-bottom: 1px solid var(--color-borde);
+    border-bottom: 1px solid #c7d4dc;
 }
 .encabezado-carrito-flotante h2 {
     margin-bottom: 4px;
@@ -446,7 +393,7 @@ body:has(#carrito-flotante[open]) {
     grid-template-columns: 64px minmax(0, 1fr);
     gap: 14px;
     padding: 18px 0;
-    border-bottom: 1px solid var(--color-borde);
+    border-bottom: 1px solid #c7d4dc;
 }
 .producto-flotante:last-child {
     border-bottom: 0;
@@ -456,7 +403,7 @@ body:has(#carrito-flotante[open]) {
     height: 64px;
     object-fit: contain;
     border-radius: 10px;
-    background: var(--color-fondo-imagen);
+    background: #f3eee7;
 }
 .producto-flotante strong {
     overflow-wrap: anywhere;
@@ -475,29 +422,29 @@ body:has(#carrito-flotante[open]) {
 }
 .pie-carrito-flotante {
     padding: 18px 20px;
-    border-top: 1px solid var(--color-borde);
+    border-top: 1px solid #c7d4dc;
 }
 .pie-carrito-flotante p {
     margin-bottom: 6px;
 }
 .pie-carrito-flotante > p + p {
     font-size: 13px;
-    color: var(--color-texto-secundario);
+    color: #536b7a;
 }
 .pie-carrito-flotante button {
     width: 100%;
     margin-top: 8px;
 }
 #comprar-desde-flotante {
-    background: var(--color-primario);
-    color: var(--color-fondo);
+    background: #315b76;
+    color: #faf8f4;
     font-weight: 600;
 }
 #comprar-desde-flotante:hover {
-    background: var(--color-primario-hover);
+    background: #24465d;
 }
 
-/* 16. Doy espacio al formulario y a los botones de compra. */
+/* Aquí organizo los campos del formulario y los botones para hacer la compra. */
 .compra {
     padding: 20px 0;
 }
@@ -512,9 +459,9 @@ body:has(#carrito-flotante[open]) {
     min-height: 42px;
     padding: 8px 12px;
     font: inherit;
-    color: var(--color-texto);
-    background-color: var(--color-superficie);
-    border: 1px solid var(--color-borde);
+    color: #273b48;
+    background-color: #ffffff;
+    border: 1px solid #c7d4dc;
     border-radius: 8px;
 }
 
@@ -532,7 +479,7 @@ body:has(#carrito-flotante[open]) {
     display: none !important;
 }
 
-/* 17. Muestro el QR y el resumen del pedido confirmado. */
+/* Esta parte muestra el código QR y la información del pedido. */
 .panel-pago-qr {
     position: relative;
     width: min(100%, 320px);
@@ -541,7 +488,7 @@ body:has(#carrito-flotante[open]) {
     margin: 20px auto;
     background: #fff;
 }
-/* Amplío y desplazo la foto para que solo se vea el QR dentro del cuadro. */
+
 .panel-pago-qr img {
     position: absolute;
     width: 193.8356%;
@@ -554,7 +501,7 @@ body:has(#carrito-flotante[open]) {
     white-space: pre-line;
     padding: 16px;
     border-radius: 12px;
-    background: var(--color-superficie-alt);
+    background: #eee7da;
 }
 #enviar-comprobante {
     width: 100%;
@@ -564,17 +511,17 @@ body:has(#carrito-flotante[open]) {
 .ayuda-comprobante {
     margin-top: 10px;
     font-size: 12px;
-    color: var(--color-texto-secundario);
+    color: #536b7a;
 }
 #confirmar-pedido, #formulario-compra button[type="submit"] {
-    background: var(--color-primario);
-    color: var(--color-fondo);
+    background: #315b76;
+    color: #faf8f4;
     font-weight: 600;
 }
 
-/* Presento los pasos para usar el carrito. */
+/* Aquí muestro los pasos que explican cómo usar el carrito. */
 #como-consultar {
-    background-color: var(--color-superficie-alt);
+    background-color: #eee7da;
     padding: 20px;
     border-radius: 20px;
 }
@@ -583,9 +530,9 @@ body:has(#carrito-flotante[open]) {
     padding-left: 20px;
 }
 
-/* 18. Organizo los datos de contacto al final de la página. */
+/* Esta parte corresponde al pie de página, donde coloco los datos de atención. */
 footer {
-    background-color: var(--color-pie);
+    background-color: #dce6ed;
     padding: 30px 15px;
     text-align: center;
 }
@@ -597,7 +544,7 @@ footer {
     margin: 20px auto;
 }
 
-/* 19. Desde 600px acomodo el contenido para tablets. */
+/* Aquí acomodo la página para que se vea bien en tablets. */
 @media screen and (min-width: 600px) {
     .boton-menu {
         display: none;
@@ -622,7 +569,7 @@ footer {
         width: 45%;
     }
 
-    /* En tablets muestro dos productos por fila. */
+    
     .lista-productos {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -640,9 +587,9 @@ footer {
     }
 }
 
-/* 20. Desde 1024px muestro tres columnas de productos. */
+/* Aquí organizo la página para que se vea bien en computadoras. */
 @media screen and (min-width: 1024px) {
-    /* En computadoras muestro tres productos por fila. */
+    
     .lista-productos {
         grid-template-columns: repeat(3, 1fr);
     }
@@ -655,9 +602,9 @@ footer {
     }
 }
 
-/* 21. Desde 1440px aprovecho el espacio con cuatro columnas. */
+/* Esta parte acomoda los productos cuando la pantalla es más grande. */
 @media screen and (min-width: 1440px) {
-    /* En pantallas grandes muestro cuatro productos por fila. */
+    
     .lista-productos {
         grid-template-columns: repeat(4, 1fr);
     }

@@ -4,34 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NaturPet — Alimentos y accesorios para mascotas</title>
-    <link rel="icon" type="image/png" href="imagenes/logo.png">
+    <link rel="icon" href="imagenes/logo.png">
 
-    <!-- Cargo la fuente Poppins desde Google Fonts. -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
-    <!-- Conecto los estilos y el archivo que controla el carrito. -->
     <link rel="stylesheet" href="estilos.css">
-    <script src="carrito.js" defer></script>
 </head>
 <body>
-    <!-- 1. Muestro el logo, el nombre de la tienda y el modo oscuro. -->
+    <!-- Aquí coloco el logo y el nombre de mi tienda. -->
     <header>
         <a href="index.html" class="logo-link">
-            <img src="imagenes/logo.png" alt="Logo NaturPet" width="60" height="60">
+            <img src="imagenes/logo.png" alt="Logo NaturPet">
             <h1>NaturPet</h1>
         </a>
         <p>Alimentos y accesorios para tu mascota</p>
-        <label class="control-tema" for="modo-oscuro">
-            <input type="checkbox" id="modo-oscuro">
-            Modo oscuro
-        </label>
     </header>
 
-    <!-- 2. Agrego enlaces para moverse por las secciones. -->
-    <nav aria-label="Menú principal">
-        <button type="button" id="boton-menu" class="boton-menu" aria-expanded="false" aria-controls="lista-menu">
+    <!-- En este menú pongo los enlaces a las secciones de la página. -->
+    <nav>
+        <button type="button" id="boton-menu" class="boton-menu" aria-expanded="false">
             ☰ Menú
         </button>
         <ul id="lista-menu">
@@ -43,7 +34,7 @@
     </nav>
 
     <main>
-        <!-- 3. Presento la tienda y un enlace al catálogo. -->
+        <!-- En esta parte presento mi tienda. -->
         <section id="nosotros" class="bienvenida">
             <div class="bienvenida-texto">
                 <h2>Nosotros</h2>
@@ -51,15 +42,14 @@
                 <p>Hay cosas pequeñas que alegran su día: un juguete nuevo, un premio o una cama cómoda. En NaturPet encontrarás artículos para acompañar a tu perro o gato en esos momentos.</p>
                 <a class="enlace-productos" href="#productos">Ver nuestros productos</a>
             </div>
-            <img class="bienvenida-imagen" src="imagenes/mascota-bienvenida.png" alt="Perro descansando en una cama junto a una ventana" width="1536" height="1024">
+            <img class="bienvenida-imagen" src="imagenes/mascota-bienvenida.png" alt="Perro descansando en una cama junto a una ventana">
         </section>
 
-        <!-- 4. Muestro las categorías y las tarjetas de productos. -->
+        <!-- Aquí muestro los productos con sus imágenes, precios y botones. -->
         <section id="productos">
             <h2>Productos</h2>
             <p>Artículos para la alimentación, el descanso, el juego y el cuidado de tu mascota.</p>
-            <p id="mensaje-carrito" role="status">Agrega los productos que te gusten y revisa tu carrito.</p>
-            <noscript>Activa JavaScript en tu navegador para utilizar el carrito.</noscript>
+            <p id="mensaje-carrito">Agrega los productos que te gusten y revisa tu carrito.</p>
 
             <h3>Categorías</h3>
             <ul class="categorias">
@@ -71,9 +61,8 @@
             </ul>
 
             <div class="lista-productos">
-                <!-- Productos de alimentación. -->
-                <article class="producto" id="alimentos" data-categoria="alimentos">
-                    <img src="imagenes/snacks-perro.png" alt="Bolsa de premios para perro" width="1536" height="1024" loading="lazy">
+                <div class="producto" id="alimentos" data-categoria="alimentos">
+                    <img src="imagenes/snacks-perro.png" alt="Bolsa de premios para perro">
                     <div class="producto-info">
                         <p class="categoria-producto">Alimentos · Perros</p>
                         <h3>Premios para perro</h3>
@@ -83,99 +72,87 @@
                             Agregar al carrito
                         </button>
                     </div>
-                </article>
-                <article class="producto" data-categoria="alimentos">
-                    <img src="imagenes/tiras_pollo_deshidratado.png" alt="Bolsa de tiras de pollo deshidratado para mascotas"
-                        width="1536" height="1024" loading="lazy">
+                </div>
+                <div class="producto" data-categoria="alimentos">
+                    <img src="imagenes/tiras_pollo_deshidratado.png" alt="Bolsa de tiras de pollo deshidratado para mascotas">
                     <div class="producto-info">
                         <p class="categoria-producto">Alimentos · Perros y gatos</p>
                         <h3>Tiras de pollo deshidratado</h3>
                         <p>Snack 100% natural, alto en proteína y libre de conservantes artificiales.</p>
                         <p class="precio">S/ 19.00</p>
-                        <button type="button" class="agregar-carrito"
-                            data-id="11" data-nombre="Tiras de pollo deshidratado" data-precio="19">
+                        <button type="button" class="agregar-carrito" data-id="11" data-nombre="Tiras de pollo deshidratado" data-precio="19">
                             Agregar al carrito
                         </button>
                     </div>
-                </article>
+                </div>
 
-                <article class="producto" data-categoria="alimentos">
-                    <img src="imagenes/higado_res_deshidratado.png" alt="Bolsa de premios de hígado de res deshidratado"
-                        width="1536" height="1024" loading="lazy">
+                <div class="producto" data-categoria="alimentos">
+                    <img src="imagenes/higado_res_deshidratado.png" alt="Bolsa de premios de hígado de res deshidratado">
                     <div class="producto-info">
                         <p class="categoria-producto">Alimentos · Perros y gatos</p>
                         <h3>Hígado de res deshidratado</h3>
                         <p>Premio rico en hierro y nutrientes esenciales, ideal para entrenamiento.</p>
                         <p class="precio">S/ 17.00</p>
-                        <button type="button" class="agregar-carrito"
-                            data-id="12" data-nombre="Hígado de res deshidratado" data-precio="17">
+                        <button type="button" class="agregar-carrito" data-id="12" data-nombre="Hígado de res deshidratado" data-precio="17">
                             Agregar al carrito
                         </button>
                     </div>
-                </article>
+                </div>
 
-                <article class="producto" data-categoria="alimentos">
-                    <img src="imagenes/bocaditos_salmon_gato.png" alt="Bolsa de bocaditos de salmón para gatos"
-                        width="1536" height="1024" loading="lazy">
+                <div class="producto" data-categoria="alimentos">
+                    <img src="imagenes/bocaditos_salmon_gato.png" alt="Bolsa de bocaditos de salmón para gatos">
                     <div class="producto-info">
                         <p class="categoria-producto">Alimentos · Gatos</p>
                         <h3>Bocaditos de salmón para gato</h3>
                         <p>Snacks crujientes con alto contenido de omega 3 para un pelaje sedoso.</p>
                         <p class="precio">S/ 15.00</p>
-                        <button type="button" class="agregar-carrito"
-                            data-id="13" data-nombre="Bocaditos de salmón para gato" data-precio="15">
+                        <button type="button" class="agregar-carrito" data-id="13" data-nombre="Bocaditos de salmón para gato" data-precio="15">
                             Agregar al carrito
                         </button>
                     </div>
-                </article>
+                </div>
 
-                <article class="producto" data-categoria="alimentos">
-                    <img src="imagenes/cubos_pollo_liofilizado.png" alt="Envase de cubos de pollo liofilizado"
-                        width="1536" height="1024" loading="lazy">
+                <div class="producto" data-categoria="alimentos">
+                    <img src="imagenes/cubos_pollo_liofilizado.png" alt="Envase de cubos de pollo liofilizado">
                     <div class="producto-info">
                         <p class="categoria-producto">Alimentos · Perros y gatos</p>
                         <h3>Cubos de pollo liofilizado</h3>
                         <p>Conserva todo el sabor y nutrientes de la carne pura con textura crujiente.</p>
                         <p class="precio">S/ 21.00</p>
-                        <button type="button" class="agregar-carrito"
-                            data-id="14" data-nombre="Cubos de pollo liofilizado" data-precio="21">
+                        <button type="button" class="agregar-carrito" data-id="14" data-nombre="Cubos de pollo liofilizado" data-precio="21">
                             Agregar al carrito
                         </button>
                     </div>
-                </article>
+                </div>
 
-                <article class="producto" data-categoria="alimentos">
-                    <img src="imagenes/tiras_pato_deshidratado.png" alt="Bolsa de tiras de carne de pato deshidratada"
-                        width="1536" height="1024" loading="lazy">
+                <div class="producto" data-categoria="alimentos">
+                    <img src="imagenes/tiras_pato_deshidratado.png" alt="Bolsa de tiras de carne de pato deshidratada">
                     <div class="producto-info">
                         <p class="categoria-producto">Alimentos · Perros y gatos</p>
                         <h3>Tiras de pato deshidratado</h3>
                         <p>Proteína alternativa hipoalergénica de fácil digestión para mascotas sensibles.</p>
                         <p class="precio">S/ 23.00</p>
-                        <button type="button" class="agregar-carrito"
-                            data-id="15" data-nombre="Tiras de pato deshidratado" data-precio="23">
+                        <button type="button" class="agregar-carrito" data-id="15" data-nombre="Tiras de pato deshidratado" data-precio="23">
                             Agregar al carrito
                         </button>
                     </div>
-                </article>
+                </div>
 
-                <article class="producto" data-categoria="alimentos">
-                    <img src="imagenes/premios_piel_pescado.png" alt="Bolsa de rollos crujientes de piel de pescado"
-                        width="1536" height="1024" loading="lazy">
+                <div class="producto" data-categoria="alimentos">
+                    <img src="imagenes/premios_piel_pescado.png" alt="Bolsa de rollos crujientes de piel de pescado">
                     <div class="producto-info">
                         <p class="categoria-producto">Alimentos · Perros</p>
                         <h3>Premios de piel de pescado</h3>
                         <p>Snack masticable que ayuda a la limpieza dental y aporta ácidos grasos naturales.</p>
                         <p class="precio">S/ 18.00</p>
-                        <button type="button" class="agregar-carrito"
-                            data-id="16" data-nombre="Premios de piel de pescado" data-precio="18">
+                        <button type="button" class="agregar-carrito" data-id="16" data-nombre="Premios de piel de pescado" data-precio="18">
                             Agregar al carrito
                         </button>
                     </div>
-                </article>
+                </div>
 
-                <article class="producto" data-categoria="alimentos">
-                    <img src="imagenes/snacks-gato.png" alt="Bolsa de bocaditos para gato" width="1536" height="1024" loading="lazy">
+                <div class="producto" data-categoria="alimentos">
+                    <img src="imagenes/snacks-gato.png" alt="Bolsa de bocaditos para gato">
                     <div class="producto-info">
                         <p class="categoria-producto">Alimentos · Gatos</p>
                         <h3>Bocaditos para gato</h3>
@@ -185,11 +162,10 @@
                             Agregar al carrito
                         </button>
                     </div>
-                </article>
+                </div>
 
-                <!-- Productos de accesorios. -->
-                <article class="producto" id="accesorios" data-categoria="accesorios">
-                    <img src="imagenes/plato-doble.png" alt="Plato doble azul para mascotas" width="1536" height="1024" loading="lazy">
+                <div class="producto" id="accesorios" data-categoria="accesorios">
+                    <img src="imagenes/plato-doble.png" alt="Plato doble azul para mascotas">
                     <div class="producto-info">
                         <p class="categoria-producto">Accesorios · Perros y gatos</p>
                         <h3>Plato doble</h3>
@@ -199,10 +175,10 @@
                             Agregar al carrito
                         </button>
                     </div>
-                </article>
+                </div>
 
-                <article class="producto" data-categoria="accesorios">
-                    <img src="imagenes/cama.png" alt="Cama redonda color mostaza" width="1536" height="1024" loading="lazy">
+                <div class="producto" data-categoria="accesorios">
+                    <img src="imagenes/cama.png" alt="Cama redonda color mostaza">
                     <div class="producto-info">
                         <p class="categoria-producto">Accesorios · Perros y gatos</p>
                         <h3>Cama redonda</h3>
@@ -212,11 +188,10 @@
                             Agregar al carrito
                         </button>
                     </div>
-                </article>
+                </div>
 
-                <!-- Productos de juguetes. -->
-                <article class="producto" id="juguetes" data-categoria="juguetes">
-                    <img src="imagenes/cuerda.png" alt="Cuerda con nudos de colores" width="1536" height="1024" loading="lazy">
+                <div class="producto" id="juguetes" data-categoria="juguetes">
+                    <img src="imagenes/cuerda.png" alt="Cuerda con nudos de colores">
                     <div class="producto-info">
                         <p class="categoria-producto">Juguetes · Perros</p>
                         <h3>Cuerda con nudos</h3>
@@ -226,10 +201,10 @@
                             Agregar al carrito
                         </button>
                     </div>
-                </article>
+                </div>
 
-                <article class="producto" data-categoria="juguetes">
-                    <img src="imagenes/raton.png" alt="Ratón de juguete gris" width="1536" height="1024" loading="lazy">
+                <div class="producto" data-categoria="juguetes">
+                    <img src="imagenes/raton.png" alt="Ratón de juguete gris">
                     <div class="producto-info">
                         <p class="categoria-producto">Juguetes · Gatos</p>
                         <h3>Ratón de juguete</h3>
@@ -239,11 +214,10 @@
                             Agregar al carrito
                         </button>
                     </div>
-                </article>
+                </div>
 
-                <!-- Productos de higiene. -->
-                <article class="producto" id="higiene" data-categoria="higiene">
-                    <img src="imagenes/cepillo.png" alt="Cepillo de mango azul para mascotas" width="1536" height="1024" loading="lazy">
+                <div class="producto" id="higiene" data-categoria="higiene">
+                    <img src="imagenes/cepillo.png" alt="Cepillo de mango azul para mascotas">
                     <div class="producto-info">
                         <p class="categoria-producto">Higiene · Perros y gatos</p>
                         <h3>Cepillo para mascotas</h3>
@@ -253,52 +227,46 @@
                             Agregar al carrito
                         </button>
                     </div>
-                </article>
-                <article class="producto" data-categoria="higiene">
-                    <img src="imagenes/shampoo_avena_perros.png" alt="Botella de shampoo de avena para perro"
-                        width="1536" height="1024" loading="lazy">
+                </div>
+                <div class="producto" data-categoria="higiene">
+                    <img src="imagenes/shampoo_avena_perros.png" alt="Botella de shampoo de avena para perro">
                     <div class="producto-info">
                         <p class="categoria-producto">Higiene · Perros</p>
                         <h3>Shampoo de avena para perro</h3>
                         <p>Cuidado suave para su piel sensible y pelaje brillante.</p>
                         <p class="precio">S/ 24.00</p>
-                        <button type="button" class="agregar-carrito"
-                            data-id="8" data-nombre="Shampoo de avena para perro" data-precio="24">
+                        <button type="button" class="agregar-carrito" data-id="8" data-nombre="Shampoo de avena para perro" data-precio="24">
                             Agregar al carrito
                         </button>
                     </div>
-                </article>
-                <article class="producto" data-categoria="higiene">
-                    <img src="imagenes/shampoo_suave_gatos.png" alt="Botella de shampoo suave para gato"
-                        width="1536" height="1024" loading="lazy">
+                </div>
+                <div class="producto" data-categoria="higiene">
+                    <img src="imagenes/shampoo_suave_gatos.png" alt="Botella de shampoo suave para gato">
                     <div class="producto-info">
                         <p class="categoria-producto">Higiene · Gatos</p>
                         <h3>Shampoo suave para gato</h3>
                         <p>Fórmula delicada hipoalergénica para el cuidado del pelaje felino.</p>
                         <p class="precio">S/ 26.00</p>
-                        <button type="button" class="agregar-carrito"
-                            data-id="9" data-nombre="Shampoo suave para gato" data-precio="26">
+                        <button type="button" class="agregar-carrito" data-id="9" data-nombre="Shampoo suave para gato" data-precio="26">
                             Agregar al carrito
                         </button>
                     </div>
-                </article>
-                <article class="producto" data-categoria="higiene">
-                    <img src="imagenes/balsamo_patitas.png" alt="Envase de bálsamo hidratante para almohadillas de mascotas"
-                        width="1536" height="1024" loading="lazy">
+                </div>
+                <div class="producto" data-categoria="higiene">
+                    <img src="imagenes/balsamo_patitas.png" alt="Envase de bálsamo hidratante para almohadillas de mascotas">
                     <div class="producto-info">
                         <p class="categoria-producto">Higiene · Perros y gatos</p>
                         <h3>Bálsamo para patitas</h3>
                         <p>Hidrata y protege almohadillas y nariz de la resequedad y grietas.</p>
                         <p class="precio">S/ 18.00</p>
-                        <button type="button" class="agregar-carrito"
-                            data-id="10" data-nombre="Bálsamo para patitas" data-precio="18">
+                        <button type="button" class="agregar-carrito" data-id="10" data-nombre="Bálsamo para patitas" data-precio="18">
                             Agregar al carrito
                         </button>
                     </div>
-                </article>
+                </div>
 
-                <article class="producto" data-categoria="higiene">
-                    <img src="imagenes/bolsas.png" alt="Rollos de bolsas para paseo" width="1536" height="1024" loading="lazy">
+                <div class="producto" data-categoria="higiene">
+                    <img src="imagenes/bolsas.png" alt="Rollos de bolsas para paseo">
                     <div class="producto-info">
                         <p class="categoria-producto">Higiene · Perros</p>
                         <h3>Bolsas para paseo</h3>
@@ -308,14 +276,14 @@
                             Agregar al carrito
                         </button>
                     </div>
-                </article>
+                </div>
             </div>
             <p class="nota-productos">Consulta las medidas, presentaciones y disponibilidad antes de pedir.</p>
         </section>
 
-        <!-- 5. Dejo un carrito en la página para revisar cantidades y total. -->
-        <section id="carrito" aria-labelledby="titulo-carrito">
-            <h2 id="titulo-carrito" tabindex="-1">Tu carrito</h2>
+        <!-- En esta sección se ven los productos agregados al carrito. -->
+        <section id="carrito">
+            <h2 id="titulo-carrito">Tu carrito</h2>
             <p id="carrito-vacio">Tu carrito está vacío. Elige algo del catálogo para empezar.</p>
             <ul id="lista-carrito"></ul>
             <p class="total-carrito">Total de productos: <strong id="total-carrito">S/ 0.00</strong></p>
@@ -324,12 +292,13 @@
             <p class="nota-productos">Los productos se recogen en tienda.</p>
         </section>
 
-        <!-- 6. Agrego información de la tienda e instrucciones del carrito. -->
+        <!-- Aquí cuento un poco más sobre la tienda. -->
         <section class="sobre-tienda">
             <h2>Un poco sobre NaturPet</h2>
             <p>Queremos reunir en un solo lugar artículos para la comida, el juego y el cuidado de tu mascota.</p>
         </section>
 
+        <!-- Aquí explico cómo usar el carrito de compras. -->
         <section id="como-consultar">
             <h2>¿Cómo usar el carrito?</h2>
             <ol class="pasos">
@@ -341,33 +310,27 @@
         </section>
     </main>
 
-    <!-- 7. Muestro el contacto, horario y ubicación de la tienda. -->
+    <!-- En el pie de página pongo el horario, la ubicación y el contacto. -->
     <footer>
         <section id="contacto">
             <h2>Contacto</h2>
             <p>¿Buscas algo para tu mascota? Escríbenos y conversemos.</p>
-            <dl class="datos-atencion">
+            <div class="datos-atencion">
                 <div>
-                    <dt>Horario de atención</dt>
-                    <dd><time datetime="09:00">09:00 a. m.</time> a <time datetime="21:00">09:00 p. m.</time></dd>
+                    <h3>Horario de atención</h3>
+                    <p>09:00 a. m. a 09:00 p. m.</p>
                 </div>
                 <div>
-                    <dt>Recojo en tienda</dt>
-                    <dd>
-                        <a class="enlace-productos" href="https://maps.app.goo.gl/eybHAfJigcSNuFDu8?g_st=iw" target="_blank" rel="noopener noreferrer">Ver ubicación en Google Maps</a>
-                    </dd>
+                    <h3>Recojo en tienda</h3>
+                    <a class="enlace-productos" href="https://maps.app.goo.gl/eybHAfJigcSNuFDu8?g_st=iw" target="_blank" rel="noopener noreferrer">Ver ubicación en Google Maps</a>
                 </div>
                 <div>
-                    <dt>Formas de pago</dt>
-                    <dd>Pregunta por las opciones disponibles.</dd>
+                    <h3>Formas de pago</h3>
+                    <p>Pregunta por las opciones disponibles.</p>
                 </div>
-            </dl>
+            </div>
             <p>
-                <!-- Dibujo el ícono de WhatsApp con SVG. -->
                 <a class="enlace-whatsapp" href="https://wa.me/51936745228?text=Hola%20NaturPet" target="_blank" rel="noopener noreferrer">
-                    <svg class="icono-svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                        <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.694.076-2.115-.515-1.748-.724-2.883-2.502-2.97-2.617-.087-.116-.708-.941-.708-1.792s.448-1.272.607-1.446c.159-.175.346-.219.462-.219.115 0 .23 0 .331.006.107.005.25.04.389.375.144.347.49 1.199.533 1.286.044.088.073.19.015.305-.058.117-.087.19-.173.292-.087.102-.183.228-.261.306-.087.087-.178.182-.077.355.101.173.45 0.742.964 1.201.662.591 1.221.774 1.394.861.174.086.275.073.376-.044.102-.116.433-.506.549-.68.116-.174.231-.145.39-.087s1.011.477 1.184.564.289.13.332.203c.043.072.043.419-.101.824z"/>
-                    </svg>
                     Escríbenos por WhatsApp
                 </a>
             </p>
@@ -375,37 +338,36 @@
         </section>
     </footer>
 
-    <!-- 8. Dejo el botón del carrito visible mientras se recorre la página. -->
-    <button type="button" id="abrir-carrito-flotante" class="boton-carrito-flotante" aria-haspopup="dialog" aria-controls="carrito-flotante" hidden>
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 3h2l3 12h11l2-9H6"/><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/></svg>
+    <!-- Este botón permite abrir el carrito desde cualquier parte de la página. -->
+    <button type="button" id="abrir-carrito-flotante" class="boton-carrito-flotante" hidden>
+        🛒
         Carrito (<span id="cantidad-flotante">0</span>) · <span id="importe-flotante">S/ 0.00</span>
     </button>
 
-    <!-- 9. En esta ventana hago todo el proceso de compra. -->
-    <dialog id="carrito-flotante" class="carrito-flotante" aria-labelledby="titulo-carrito-flotante">
+    <!-- Aquí tengo la ventana donde se revisan los productos y se hace el pedido. -->
+    <dialog id="carrito-flotante" class="carrito-flotante">
         <div class="encabezado-carrito-flotante">
             <div>
-                <h2 id="titulo-carrito-flotante" tabindex="-1">Tu carrito</h2>
-                <p id="paso-compra-flotante" role="status">Paso 1 de 3 · Productos</p>
+                <h2 id="titulo-carrito-flotante">Tu carrito</h2>
+                <p id="paso-compra-flotante">Paso 1 de 3 · Productos</p>
             </div>
-            <button type="button" id="cerrar-carrito-flotante" aria-label="Cerrar carrito" autofocus>✕</button>
+            <button type="button" id="cerrar-carrito-flotante" aria-label="Cerrar carrito">✕</button>
         </div>
         <div class="contenido-carrito-flotante">
-            <!-- Primero muestro los productos seleccionados. -->
             <div id="productos-flotantes">
                 <p id="vacio-flotante">Tu carrito está vacío. Agrega productos del catálogo.</p>
                 <ul id="lista-carrito-flotante"></ul>
             </div>
             <div id="compra" class="compra" hidden>
-                <!-- Después pido los datos del cliente y muestro el QR de Yape. -->
+                <!-- Este formulario pide los datos del cliente. -->
                 <form id="formulario-compra">
                     <h3>Datos para tu pedido</h3>
                     <p>Completa los campos obligatorios para continuar.</p>
                     <label for="nombre-cliente">Nombre</label>
-                    <input id="nombre-cliente" type="text" autocomplete="name" required minlength="2" maxlength="80">
+                    <input id="nombre-cliente" type="text" required>
 
                     <label for="telefono-cliente">Teléfono</label>
-                    <input id="telefono-cliente" type="tel" autocomplete="tel" required pattern="[0-9 +\(\)\-]{9,20}" title="Escribe un teléfono con al menos 9 números. Puedes usar espacios, +, paréntesis o guiones.">
+                    <input id="telefono-cliente" type="tel" required>
 
                     <label for="tipo-entrega">Tipo de entrega</label>
                     <select id="tipo-entrega">
@@ -417,7 +379,7 @@
                         <option value="yape" selected>Yape</option>
                     </select>
                     <div id="panel-pago-qr" class="panel-pago-qr" hidden>
-                        <img id="imagen-pago-qr" alt="QR de Yape de Angel Aron Rivas Chavez" width="1132" height="1601">
+                        <img id="imagen-pago-qr" alt="QR de Yape de Angel Aron Rivas Chavez">
                     </div>
 
                     <p class="nota-productos">
@@ -430,9 +392,9 @@
                     </div>
                 </form>
 
-                <!-- Antes de confirmar, muestro el resumen para revisarlo. -->
+                <!-- Aquí aparece el resumen para revisar el pedido. -->
                 <div id="revision-pedido" hidden>
-                    <h3 id="titulo-revision" tabindex="-1">Revisa tu pedido</h3>
+                    <h3 id="titulo-revision">Revisa tu pedido</h3>
                     <p id="resumen-cliente"></p>
                     <p id="resumen-entrega"></p>
                     <p id="resumen-pago"></p>
@@ -446,9 +408,9 @@
                     </div>
                 </div>
 
-                <!-- Al terminar, preparo el enlace para enviar el comprobante por WhatsApp. -->
+                <!-- Aquí aparece la información cuando el pedido se confirma. -->
                 <div id="pedido-completado" hidden>
-                    <h3 id="titulo-confirmacion" tabindex="-1">¡Pedido confirmado!</h3>
+                    <h3 id="titulo-confirmacion">¡Pedido confirmado!</h3>
                     <p>Envía el comprobante de pago por WhatsApp junto al resumen de tu pedido para coordinar el recojo en tienda.</p>
                     <p id="comprobante-pedido"></p>
                     <a id="enviar-comprobante" class="enlace-whatsapp" target="_blank" rel="noopener noreferrer">Enviar comprobante de pago realizado</a>
@@ -458,11 +420,13 @@
             </div>
         </div>
         <div id="pie-carrito-flotante" class="pie-carrito-flotante">
-            <p class="total-carrito">Total: <strong id="total-flotante" aria-live="polite">S/ 0.00</strong></p>
+            <p class="total-carrito">Total: <strong id="total-flotante">S/ 0.00</strong></p>
             <p>Recojo en tienda · Sin cargo de envío</p>
             <button type="button" id="comprar-desde-flotante" disabled>Continuar compra</button>
             <button type="button" id="seguir-comprando">Seguir comprando</button>
         </div>
     </dialog>
+    <!-- Este archivo hace funcionar el carrito y los botones de la página. -->
+    <script src="carrito.js"></script>
 </body>
 </html>
