@@ -1,410 +1,107 @@
-// 1. Datos que uso en el carrito
-// Cada producto guarda su id, nombre, precio, imagen y cantidad.
+// Aquí guardo los productos que se agregan al carrito.
 let carrito = [];
-const imagenQrPago = 'imagenes/qr-yape.jpeg';
 
-// 2. Elementos que voy a actualizar en la página
-// Los busco una sola vez usando los id del HTML.
+// Aquí busco los botones y las partes de la página que voy a usar.
 const botonMenu = document.getElementById('boton-menu');
 const listaMenu = document.getElementById('lista-menu');
 const botonesFiltro = document.querySelectorAll('.filtro-categoria');
 const tarjetasProductos = document.querySelectorAll('.producto');
-
 const botonesAgregar = document.querySelectorAll('.agregar-carrito');
+
 const listaCarrito = document.getElementById('lista-carrito');
+const listaCarritoFlotante = document.getElementById('lista-carrito-flotante');
 const contadorCarrito = document.getElementById('contador-carrito');
 const totalCarrito = document.getElementById('total-carrito');
-const carritoVacio = document.getElementById('carrito-vacio');
-const mensajeCarrito = document.getElementById('mensaje-carrito');
-const vaciarCarrito = document.getElementById('vaciar-carrito');
-const continuarCompra = document.getElementById('continuar-compra');
-const tituloCarrito = document.getElementById('titulo-carrito');
-
-// Elementos de la ventana flotante.
-const ventanaCarrito = document.getElementById('carrito-flotante');
-const abrirCarritoFlotante = document.getElementById('abrir-carrito-flotante');
-const cerrarCarritoFlotante = document.getElementById('cerrar-carrito-flotante');
-const seguirComprando = document.getElementById('seguir-comprando');
-const comprarDesdeFlotante = document.getElementById('comprar-desde-flotante');
-const productosFlotantes = document.getElementById('productos-flotantes');
-const listaCarritoFlotante = document.getElementById('lista-carrito-flotante');
+const totalFlotante = document.getElementById('total-flotante');
 const cantidadFlotante = document.getElementById('cantidad-flotante');
 const importeFlotante = document.getElementById('importe-flotante');
-const totalFlotante = document.getElementById('total-flotante');
-const vacioFlotante = document.getElementById('vacio-flotante');
-const pieCarritoFlotante = document.getElementById('pie-carrito-flotante');
-const tituloCarritoFlotante = document.getElementById('titulo-carrito-flotante');
-const pasoCompraFlotante = document.getElementById('paso-compra-flotante');
-const contenidoFlotante = document.querySelector('.contenido-carrito-flotante');
+const mensajeCarrito = document.getElementById('mensaje-carrito');
 
-// Formulario, resumen y confirmación del pedido.
+const ventanaCarrito = document.getElementById('carrito-flotante');
+const productosFlotantes = document.getElementById('productos-flotantes');
+const pieCarritoFlotante = document.getElementById('pie-carrito-flotante');
 const compra = document.getElementById('compra');
 const formularioCompra = document.getElementById('formulario-compra');
+const revisionPedido = document.getElementById('revision-pedido');
+const pedidoCompletado = document.getElementById('pedido-completado');
+const pasoCompra = document.getElementById('paso-compra-flotante');
+
 const nombreCliente = document.getElementById('nombre-cliente');
 const telefonoCliente = document.getElementById('telefono-cliente');
 const metodoPago = document.getElementById('metodo-pago');
-const panelPagoQr = document.getElementById('panel-pago-qr');
-const imagenPagoQr = document.getElementById('imagen-pago-qr');
-const cancelarCompra = document.getElementById('cancelar-compra');
-const revisionPedido = document.getElementById('revision-pedido');
-const tituloRevision = document.getElementById('titulo-revision');
-const resumenCliente = document.getElementById('resumen-cliente');
-const resumenEntrega = document.getElementById('resumen-entrega');
-const resumenPago = document.getElementById('resumen-pago');
-const resumenProductos = document.getElementById('resumen-productos');
-const resumenTotal = document.getElementById('resumen-total');
-const resumenEnvio = document.getElementById('resumen-envio');
-const editarDatos = document.getElementById('editar-datos');
-const confirmarPedido = document.getElementById('confirmar-pedido');
-const pedidoCompletado = document.getElementById('pedido-completado');
-const tituloConfirmacion = document.getElementById('titulo-confirmacion');
-const comprobantePedido = document.getElementById('comprobante-pedido');
-const enviarComprobante = document.getElementById('enviar-comprobante');
-const finalizarCompra = document.getElementById('finalizar-compra');
-const contactoWhatsApp = document.querySelector('#contacto .enlace-whatsapp');
-const catalogoProductos = document.getElementById('productos');
 
-// 3. Funciones para el menú responsivo y filtro de categorías
-function alternarMenu() {
-    const abierto = listaMenu.classList.toggle('mostrar');
-    botonMenu.setAttribute('aria-expanded', abierto);
-    botonMenu.textContent = abierto ? '✕ Cerrar' : '☰ Menú';
-}
+// Aquí hago que el menú se abra y se cierre en celulares.
+botonMenu.addEventListener('click', function () {
+    listaMenu.classList.toggle('mostrar');
 
-function filtrarProductos(categoria) {
-    tarjetasProductos.forEach(function (tarjeta) {
-        if (categoria === 'todos' || tarjeta.dataset.categoria === categoria) {
-            tarjeta.hidden = false;
-        } else {
-            tarjeta.hidden = true;
-        }
-    });
-}
-
-// 4. Funciones para dibujar los productos
-// Uso esta función para escribir todos los precios de la misma forma.
-function mostrarPrecio(importe) {
-    return 'S/ ' + importe.toFixed(2);
-}
-
-function crearBoton(texto, accion, producto, ubicacion) {
-    const boton = document.createElement('button');
-    boton.type = 'button';
-    boton.textContent = texto;
-    // La ubicación evita repetir id entre el carrito de la página y la ventana.
-    boton.id = ubicacion + '-' + accion + '-' + producto.id;
-    boton.setAttribute('aria-label', accion + ' ' + producto.nombre);
-    boton.addEventListener('click', function () {
-        cambiarCantidad(producto.id, accion, ubicacion);
-    });
-    return boton;
-}
-
-// Los dos carritos usan los mismos botones de cantidad.
-function crearControlesCantidad(producto, ubicacion) {
-    const controles = document.createElement('div');
-    controles.className = 'controles-cantidad';
-    const cantidad = document.createElement('span');
-    cantidad.textContent = 'Cantidad: ' + producto.cantidad;
-    controles.append(
-        crearBoton('−', 'Disminuir', producto, ubicacion),
-        cantidad,
-        crearBoton('+', 'Aumentar', producto, ubicacion),
-        crearBoton('Quitar', 'Quitar', producto, ubicacion)
-    );
-    return controles;
-}
-
-function crearFilaProducto(producto, ubicacion) {
-    const fila = document.createElement('li');
-    const detalle = document.createElement('div');
-    const nombre = document.createElement('strong');
-    const precio = document.createElement('p');
-    const subtotal = producto.precio * producto.cantidad;
-    const controles = crearControlesCantidad(producto, ubicacion);
-    nombre.textContent = producto.nombre;
-    precio.textContent = mostrarPrecio(producto.precio) + ' por unidad';
-
-    // En la ventana también muestro la imagen y el subtotal debajo de los botones.
-    if (ubicacion === 'flotante') {
-        fila.className = 'producto-flotante';
-        const imagen = document.createElement('img');
-        imagen.src = producto.imagen;
-        imagen.alt = producto.nombre;
-        imagen.width = 72;
-        imagen.height = 72;
-        const textoSubtotal = document.createElement('p');
-        textoSubtotal.className = 'subtotal-flotante';
-        textoSubtotal.textContent = 'Subtotal: ' + mostrarPrecio(subtotal);
-        detalle.append(nombre, precio, controles, textoSubtotal);
-        fila.append(imagen, detalle);
+    if (listaMenu.classList.contains('mostrar')) {
+        botonMenu.textContent = '✕ Cerrar';
     } else {
-        fila.className = 'item-carrito';
-        precio.textContent += ' · Subtotal: ' + mostrarPrecio(subtotal);
-        detalle.append(nombre, precio);
-        fila.append(detalle, controles);
+        botonMenu.textContent = '☰ Menú';
     }
-    return fila;
-}
-
-function mostrarCarrito() {
-    // Borro las filas anteriores y las vuelvo a crear con las cantidades actuales.
-    listaCarrito.textContent = '';
-    listaCarritoFlotante.textContent = '';
-    let total = 0;
-    let cantidadTotal = 0;
-
-    carrito.forEach(function (producto) {
-        listaCarrito.appendChild(crearFilaProducto(producto, 'pagina'));
-        listaCarritoFlotante.appendChild(crearFilaProducto(producto, 'flotante'));
-        total += producto.precio * producto.cantidad;
-        cantidadTotal += producto.cantidad;
-    });
-
-    totalCarrito.textContent = mostrarPrecio(total);
-    totalFlotante.textContent = mostrarPrecio(total);
-    importeFlotante.textContent = mostrarPrecio(total);
-    contadorCarrito.textContent = cantidadTotal;
-    cantidadFlotante.textContent = cantidadTotal;
-
-    const estaVacio = carrito.length === 0;
-    carritoVacio.hidden = !estaVacio;
-    vacioFlotante.hidden = !estaVacio;
-    vaciarCarrito.disabled = estaVacio;
-    continuarCompra.disabled = estaVacio;
-    comprarDesdeFlotante.disabled = estaVacio;
-
-    // Si cambio los productos, vuelvo al carrito para revisar el pedido otra vez.
-    cambiarPasoCompra('carrito');
-    actualizarMetodoPago();
-}
-
-// 5. Funciones para agregar, cambiar cantidades y vaciar
-function agregarProducto(boton) {
-    const id = boton.dataset.id;
-    let productoEncontrado = false;
-
-    carrito.forEach(function (producto) {
-        if (producto.id === id) {
-            producto.cantidad++;
-            productoEncontrado = true;
-        }
-    });
-
-    // Si ya estaba agregado, solo aumento la cantidad. Si no, lo guardo en la lista.
-    if (!productoEncontrado) {
-        const tarjeta = boton.closest('.producto');
-        const imagen = tarjeta.querySelector('img');
-        carrito.push({
-            id: id,
-            nombre: boton.dataset.nombre,
-            precio: Number(boton.dataset.precio),
-            imagen: imagen.getAttribute('src'),
-            cantidad: 1
-        });
-    }
-
-    mostrarCarrito();
-    mensajeCarrito.textContent = 'Agregaste ' + boton.dataset.nombre
-        + '. Artículos en tu carrito: ' + contadorCarrito.textContent + '.';
-}
-
-function cambiarCantidad(id, accion, ubicacion) {
-    for (let indice = 0; indice < carrito.length; indice++) {
-        const producto = carrito[indice];
-        if (producto.id === id) {
-            if (accion === 'Aumentar') {
-                producto.cantidad++;
-            } else if (accion === 'Disminuir' && producto.cantidad > 1) {
-                producto.cantidad--;
-            } else {
-                // Quito el producto al pulsar Quitar o al bajar de una unidad.
-                carrito.splice(indice, 1);
-            }
-            break;
-        }
-    }
-
-    mostrarCarrito();
-    mensajeCarrito.textContent = 'Carrito actualizado. Total: ' + totalCarrito.textContent;
-
-    // Devuelvo el foco al botón para poder seguir usando el teclado.
-    const botonActualizado = document.getElementById(ubicacion + '-' + accion + '-' + id);
-    if (botonActualizado) {
-        botonActualizado.focus();
-    } else if (ubicacion === 'flotante') {
-        tituloCarritoFlotante.focus();
-    } else {
-        tituloCarrito.focus();
-    }
-}
-
-function vaciarProductos() {
-    if (!confirm('¿Seguro que quieres vaciar todo el carrito?')) {
-        return;
-    }
-    carrito = [];
-    mostrarCarrito();
-    mensajeCarrito.textContent = 'Vaciaste el carrito.';
-    tituloCarrito.focus();
-}
-
-// 6. Funciones de la ventana y los pasos de compra
-function abrirVentanaCarrito() {
-    if (!ventanaCarrito.open) {
-        ventanaCarrito.showModal();
-    }
-}
-
-function cerrarVentanaCarrito() {
-    ventanaCarrito.close();
-}
-
-function cambiarPasoCompra(paso) {
-    // hidden oculta las partes que no pertenecen al paso actual.
-    productosFlotantes.hidden = paso !== 'carrito';
-    pieCarritoFlotante.hidden = paso !== 'carrito';
-    compra.hidden = paso === 'carrito';
-    formularioCompra.hidden = paso !== 'datos';
-    revisionPedido.hidden = paso !== 'revision';
-    pedidoCompletado.hidden = paso !== 'confirmacion';
-
-    const nombresPasos = {
-        carrito: 'Paso 1 de 3 · Productos',
-        datos: 'Paso 2 de 3 · Datos y pago',
-        revision: 'Paso 3 de 3 · Revisa y confirma',
-        confirmacion: 'Pedido confirmado'
-    };
-    pasoCompraFlotante.textContent = nombresPasos[paso];
-    contenidoFlotante.scrollTop = 0;
-}
-
-function actualizarMetodoPago() {
-    panelPagoQr.hidden = metodoPago.value !== 'yape';
-    imagenPagoQr.src = imagenQrPago;
-}
-
-function iniciarCompra() {
-    if (carrito.length === 0) {
-        return;
-    }
-    abrirVentanaCarrito();
-    cambiarPasoCompra('datos');
-    actualizarMetodoPago();
-    nombreCliente.focus();
-}
-
-function validarDatosCliente() {
-    const nombre = nombreCliente.value.trim();
-    // Quito espacios y signos para contar solo los números del teléfono.
-    const numerosTelefono = telefonoCliente.value.replace(/\D/g, '');
-    nombreCliente.setCustomValidity('');
-    telefonoCliente.setCustomValidity('');
-
-    if (nombre.length < 2) {
-        nombreCliente.setCustomValidity('Escribe tu nombre.');
-    }
-    if (numerosTelefono.length < 9) {
-        telefonoCliente.setCustomValidity('Escribe un teléfono con al menos 9 números.');
-    }
-    if (!formularioCompra.reportValidity()) {
-        return false;
-    }
-    if (metodoPago.value !== 'yape') {
-        metodoPago.focus();
-        return false;
-    }
-    return true;
-}
-
-function revisarPedido(evento) {
-    // Evito que el formulario recargue la página al enviarlo.
-    evento.preventDefault();
-    if (carrito.length === 0 || !validarDatosCliente()) {
-        return;
-    }
-
-    resumenCliente.textContent = 'Nombre: ' + nombreCliente.value.trim()
-        + ' · Teléfono: ' + telefonoCliente.value.trim();
-    resumenEntrega.textContent = 'Entrega: RECOJO EN TIENDA.';
-    resumenPago.textContent = 'Método de pago: Yape.';
-    resumenProductos.textContent = '';
-    let total = 0;
-
-    carrito.forEach(function (producto) {
-        const subtotal = producto.precio * producto.cantidad;
-        const item = document.createElement('li');
-        item.textContent = producto.nombre + ' × ' + producto.cantidad + ' — ' + mostrarPrecio(subtotal);
-        resumenProductos.appendChild(item);
-        total += subtotal;
-    });
-
-    resumenTotal.textContent = mostrarPrecio(total);
-    resumenEnvio.textContent = 'Recojo en tienda: sin cargo de envío.';
-    cambiarPasoCompra('revision');
-    tituloRevision.focus();
-}
-
-// 7. Confirmación y mensaje para WhatsApp
-function crearResumenPedido() {
-    let resumen = resumenCliente.textContent + '\n';
-    carrito.forEach(function (producto) {
-        const subtotal = producto.precio * producto.cantidad;
-        resumen += producto.nombre + ' × ' + producto.cantidad + ' — ' + mostrarPrecio(subtotal) + '\n';
-    });
-    resumen += 'Total: ' + resumenTotal.textContent + '\n';
-    resumen += resumenPago.textContent + '\n';
-    resumen += 'Recojo en tienda · Sin cargo de envío.';
-    return resumen;
-}
-
-function prepararMensajeWhatsApp(resumen) {
-    const mensaje = 'Hola NaturPet, quiero enviar el comprobante de pago de este pedido.\n\n'
-        + resumen + '\n\nAdjuntaré la imagen del comprobante para su revisión.';
-    // Uso el mismo número de la sección Contacto. URL prepara el texto del enlace.
-    const enlace = new URL(contactoWhatsApp.href);
-    enlace.searchParams.set('text', mensaje);
-    enviarComprobante.href = enlace.toString();
-}
-
-function completarPedido() {
-    if (carrito.length === 0 || revisionPedido.hidden) {
-        return;
-    }
-
-    // Primero guardo el resumen para no perderlo cuando vacíe el carrito.
-    const resumen = crearResumenPedido();
-    comprobantePedido.textContent = resumen;
-    prepararMensajeWhatsApp(resumen);
-    carrito = [];
-    mostrarCarrito();
-    formularioCompra.reset();
-    actualizarMetodoPago();
-    cambiarPasoCompra('confirmacion');
-    mensajeCarrito.textContent = 'Pedido confirmado. El carrito está vacío.';
-    tituloConfirmacion.focus();
-}
-
-// 8. Acciones que se ejecutan al usar los botones y el formulario
-botonMenu.addEventListener('click', alternarMenu);
+});
 
 listaMenu.querySelectorAll('a').forEach(function (enlace) {
     enlace.addEventListener('click', function () {
         listaMenu.classList.remove('mostrar');
-        botonMenu.setAttribute('aria-expanded', 'false');
         botonMenu.textContent = '☰ Menú';
     });
 });
 
+// Aquí filtro los productos según la categoría seleccionada.
 botonesFiltro.forEach(function (boton) {
     boton.addEventListener('click', function () {
-        botonesFiltro.forEach(function (item) {
-            item.classList.remove('activo');
+        const categoria = boton.getAttribute('data-categoria');
+
+        botonesFiltro.forEach(function (otroBoton) {
+            otroBoton.classList.remove('activo');
         });
         boton.classList.add('activo');
-        filtrarProductos(boton.dataset.categoria);
+
+        tarjetasProductos.forEach(function (tarjeta) {
+            if (categoria === 'todos' || tarjeta.getAttribute('data-categoria') === categoria) {
+                tarjeta.hidden = false;
+            } else {
+                tarjeta.hidden = true;
+            }
+        });
     });
 });
+
+// Aquí muestro los precios con dos decimales.
+function mostrarPrecio(precio) {
+    return 'S/ ' + precio.toFixed(2);
+}
+
+// Aquí agrego los productos y aumento la cantidad cuando ya están en el carrito.
+function agregarProducto(boton) {
+    const id = boton.getAttribute('data-id');
+    let encontrado = false;
+
+    for (let i = 0; i < carrito.length; i++) {
+        if (carrito[i].id === id) {
+            carrito[i].cantidad++;
+            encontrado = true;
+            break;
+        }
+    }
+
+    if (encontrado === false) {
+        const tarjeta = boton.closest('.producto');
+        const imagen = tarjeta.querySelector('img').getAttribute('src');
+
+        carrito.push({
+            id: id,
+            nombre: boton.getAttribute('data-nombre'),
+            precio: Number(boton.getAttribute('data-precio')),
+            imagen: imagen,
+            cantidad: 1
+        });
+    }
+
+    actualizarCarrito();
+    mensajeCarrito.textContent = 'Agregaste ' + boton.getAttribute('data-nombre') + ' al carrito.';
+}
 
 botonesAgregar.forEach(function (boton) {
     boton.addEventListener('click', function () {
@@ -412,49 +109,270 @@ botonesAgregar.forEach(function (boton) {
     });
 });
 
-vaciarCarrito.addEventListener('click', vaciarProductos);
-abrirCarritoFlotante.addEventListener('click', abrirVentanaCarrito);
-cerrarCarritoFlotante.addEventListener('click', cerrarVentanaCarrito);
-seguirComprando.addEventListener('click', cerrarVentanaCarrito);
-continuarCompra.addEventListener('click', iniciarCompra);
-comprarDesdeFlotante.addEventListener('click', iniciarCompra);
-metodoPago.addEventListener('change', actualizarMetodoPago);
-formularioCompra.addEventListener('submit', revisarPedido);
-confirmarPedido.addEventListener('click', completarPedido);
+// Aquí creo los botones para aumentar, disminuir o quitar un producto.
+function crearBoton(texto, accion, id) {
+    const boton = document.createElement('button');
+    boton.type = 'button';
+    boton.textContent = texto;
 
-// También cierro la ventana si se pulsa fuera de ella. Escape lo permite el propio dialog.
-ventanaCarrito.addEventListener('click', function (evento) {
-    const limites = ventanaCarrito.getBoundingClientRect();
-    const fueraDeLaVentana = evento.clientX < limites.left || evento.clientX > limites.right
-        || evento.clientY < limites.top || evento.clientY > limites.bottom;
-    if (evento.target === ventanaCarrito && fueraDeLaVentana) {
-        cerrarVentanaCarrito();
+    boton.addEventListener('click', function () {
+        cambiarCantidad(id, accion);
+    });
+    return boton;
+}
+
+// Aquí muestro cada producto dentro del carrito.
+function crearProductoCarrito(producto, esFlotante) {
+    const fila = document.createElement('li');
+    const datos = document.createElement('div');
+    const nombre = document.createElement('strong');
+    const precio = document.createElement('p');
+    const controles = document.createElement('div');
+    const subtotal = producto.precio * producto.cantidad;
+
+    nombre.textContent = producto.nombre;
+    precio.textContent = mostrarPrecio(producto.precio) + ' por unidad';
+    controles.className = 'controles-cantidad';
+
+    const cantidad = document.createElement('span');
+    cantidad.textContent = 'Cantidad: ' + producto.cantidad;
+    controles.appendChild(crearBoton('-', 'disminuir', producto.id));
+    controles.appendChild(cantidad);
+    controles.appendChild(crearBoton('+', 'aumentar', producto.id));
+    controles.appendChild(crearBoton('Quitar', 'quitar', producto.id));
+
+    datos.appendChild(nombre);
+    datos.appendChild(precio);
+
+    if (esFlotante) {
+        fila.className = 'producto-flotante';
+        const imagen = document.createElement('img');
+        imagen.src = producto.imagen;
+        imagen.alt = producto.nombre;
+
+        const textoSubtotal = document.createElement('p');
+        textoSubtotal.className = 'subtotal-flotante';
+        textoSubtotal.textContent = 'Subtotal: ' + mostrarPrecio(subtotal);
+
+        datos.appendChild(controles);
+        datos.appendChild(textoSubtotal);
+        fila.appendChild(imagen);
+        fila.appendChild(datos);
+    } else {
+        fila.className = 'item-carrito';
+        precio.textContent += ' - Subtotal: ' + mostrarPrecio(subtotal);
+        fila.appendChild(datos);
+        fila.appendChild(controles);
+    }
+
+    return fila;
+}
+
+// Aquí actualizo la lista, las cantidades y el total de los dos carritos.
+function actualizarCarrito() {
+    listaCarrito.innerHTML = '';
+    listaCarritoFlotante.innerHTML = '';
+    let total = 0;
+    let cantidadTotal = 0;
+
+    for (let i = 0; i < carrito.length; i++) {
+        const producto = carrito[i];
+        listaCarrito.appendChild(crearProductoCarrito(producto, false));
+        listaCarritoFlotante.appendChild(crearProductoCarrito(producto, true));
+        total += producto.precio * producto.cantidad;
+        cantidadTotal += producto.cantidad;
+    }
+
+    totalCarrito.textContent = mostrarPrecio(total);
+    totalFlotante.textContent = mostrarPrecio(total);
+    importeFlotante.textContent = mostrarPrecio(total);
+    contadorCarrito.textContent = cantidadTotal;
+    cantidadFlotante.textContent = cantidadTotal;
+
+    const vacio = carrito.length === 0;
+    document.getElementById('carrito-vacio').hidden = !vacio;
+    document.getElementById('vacio-flotante').hidden = !vacio;
+    document.getElementById('vaciar-carrito').disabled = vacio;
+    document.getElementById('continuar-compra').disabled = vacio;
+    document.getElementById('comprar-desde-flotante').disabled = vacio;
+
+    mostrarPaso('carrito');
+}
+
+// Aquí cambio las cantidades de los productos o los elimino del carrito.
+function cambiarCantidad(id, accion) {
+    for (let i = 0; i < carrito.length; i++) {
+        if (carrito[i].id === id) {
+            if (accion === 'aumentar') {
+                carrito[i].cantidad++;
+            } else if (accion === 'disminuir' && carrito[i].cantidad > 1) {
+                carrito[i].cantidad--;
+            } else {
+                carrito.splice(i, 1);
+            }
+            break;
+        }
+    }
+
+    actualizarCarrito();
+    mensajeCarrito.textContent = 'Carrito actualizado. Total: ' + totalCarrito.textContent;
+}
+
+// Aquí vacío el carrito cuando el usuario lo confirma.
+document.getElementById('vaciar-carrito').addEventListener('click', function () {
+    if (confirm('¿Seguro que quieres vaciar el carrito?')) {
+        carrito = [];
+        actualizarCarrito();
+        mensajeCarrito.textContent = 'El carrito está vacío.';
     }
 });
 
-// Borro el mensaje de error cuando el cliente vuelve a escribir.
-[nombreCliente, telefonoCliente].forEach(function (campo) {
-    campo.addEventListener('input', function () {
-        campo.setCustomValidity('');
-    });
+// Aquí muestro la parte del carrito, los datos o la confirmación del pedido.
+function mostrarPaso(paso) {
+    productosFlotantes.hidden = true;
+    pieCarritoFlotante.hidden = true;
+    compra.hidden = true;
+    formularioCompra.hidden = true;
+    revisionPedido.hidden = true;
+    pedidoCompletado.hidden = true;
+
+    if (paso === 'carrito') {
+        productosFlotantes.hidden = false;
+        pieCarritoFlotante.hidden = false;
+        pasoCompra.textContent = 'Paso 1 de 3 - Productos';
+    } else if (paso === 'datos') {
+        compra.hidden = false;
+        formularioCompra.hidden = false;
+        pasoCompra.textContent = 'Paso 2 de 3 - Datos y pago';
+    } else if (paso === 'revision') {
+        compra.hidden = false;
+        revisionPedido.hidden = false;
+        pasoCompra.textContent = 'Paso 3 de 3 - Revisa tu pedido';
+    } else if (paso === 'confirmacion') {
+        compra.hidden = false;
+        pedidoCompletado.hidden = false;
+        pasoCompra.textContent = 'Pedido confirmado';
+    }
+}
+
+// Aquí abro y cierro la ventana del carrito.
+document.getElementById('abrir-carrito-flotante').addEventListener('click', function () {
+    ventanaCarrito.showModal();
 });
 
-editarDatos.addEventListener('click', function () {
-    cambiarPasoCompra('datos');
-    nombreCliente.focus();
+document.getElementById('cerrar-carrito-flotante').addEventListener('click', function () {
+    ventanaCarrito.close();
 });
 
-cancelarCompra.addEventListener('click', function () {
-    cambiarPasoCompra('carrito');
-    comprarDesdeFlotante.focus();
+document.getElementById('seguir-comprando').addEventListener('click', function () {
+    ventanaCarrito.close();
 });
 
-finalizarCompra.addEventListener('click', function () {
-    cerrarVentanaCarrito();
-    cambiarPasoCompra('carrito');
-    catalogoProductos.scrollIntoView({ block: 'start' });
+// Aquí paso al formulario y muestro el código QR de Yape.
+function iniciarCompra() {
+    if (carrito.length === 0) {
+        return;
+    }
+    if (!ventanaCarrito.open) {
+        ventanaCarrito.showModal();
+    }
+
+    document.getElementById('panel-pago-qr').hidden = false;
+    document.getElementById('imagen-pago-qr').src = 'imagenes/qr-yape.jpeg';
+    mostrarPaso('datos');
+}
+
+document.getElementById('continuar-compra').addEventListener('click', iniciarCompra);
+document.getElementById('comprar-desde-flotante').addEventListener('click', iniciarCompra);
+
+// Aquí reviso los datos del cliente y preparo el resumen del pedido.
+formularioCompra.addEventListener('submit', function (evento) {
+    evento.preventDefault();
+
+    const nombre = nombreCliente.value.trim();
+    const telefono = telefonoCliente.value.trim();
+
+    if (nombre.length < 2) {
+        alert('Escribe tu nombre.');
+        return;
+    }
+    if (telefono.length !== 9 || isNaN(Number(telefono))) {
+        alert('Escribe un número de teléfono de 9 dígitos.');
+        return;
+    }
+    if (carrito.length === 0) {
+        return;
+    }
+
+    document.getElementById('resumen-cliente').textContent = 'Nombre: ' + nombre + ' - Teléfono: ' + telefono;
+    document.getElementById('resumen-entrega').textContent = 'Entrega: Recojo en tienda';
+    document.getElementById('resumen-pago').textContent = 'Método de pago: ' + metodoPago.value;
+    document.getElementById('resumen-envio').textContent = 'Recojo en tienda, sin costo de envío.';
+
+    const resumenProductos = document.getElementById('resumen-productos');
+    resumenProductos.innerHTML = '';
+    let total = 0;
+
+    for (let i = 0; i < carrito.length; i++) {
+        const producto = carrito[i];
+        const subtotal = producto.precio * producto.cantidad;
+        const linea = document.createElement('li');
+        linea.textContent = producto.nombre + ' x ' + producto.cantidad + ' - ' + mostrarPrecio(subtotal);
+        resumenProductos.appendChild(linea);
+        total += subtotal;
+    }
+
+    document.getElementById('resumen-total').textContent = mostrarPrecio(total);
+    mostrarPaso('revision');
 });
 
-// 9. Estado inicial de la página
-abrirCarritoFlotante.hidden = false;
-mostrarCarrito();
+// Aquí permito regresar para corregir los datos o revisar el carrito.
+document.getElementById('editar-datos').addEventListener('click', function () {
+    mostrarPaso('datos');
+});
+
+document.getElementById('cancelar-compra').addEventListener('click', function () {
+    mostrarPaso('carrito');
+});
+
+// Aquí confirmo el pedido y preparo el mensaje que se enviará por WhatsApp.
+document.getElementById('confirmar-pedido').addEventListener('click', function () {
+    if (carrito.length === 0) {
+        return;
+    }
+
+    let resumen = 'Nombre: ' + nombreCliente.value.trim() + '\n';
+    resumen += 'Teléfono: ' + telefonoCliente.value.trim() + '\n\n';
+
+    for (let i = 0; i < carrito.length; i++) {
+        const producto = carrito[i];
+        resumen += producto.nombre + ' x ' + producto.cantidad;
+        resumen += ' - ' + mostrarPrecio(producto.precio * producto.cantidad) + '\n';
+    }
+
+    resumen += '\nTotal: ' + document.getElementById('resumen-total').textContent + '\n';
+    resumen += 'Pago: Yape\n';
+    resumen += 'Recojo en tienda';
+
+    document.getElementById('comprobante-pedido').textContent = resumen;
+    const mensaje = 'Hola NaturPet, quiero enviar el comprobante de mi pedido.\n\n' + resumen;
+    document.getElementById('enviar-comprobante').href =
+        'https://wa.me/51936745228?text=' + encodeURIComponent(mensaje);
+
+    carrito = [];
+    actualizarCarrito();
+    formularioCompra.reset();
+    mostrarPaso('confirmacion');
+    mensajeCarrito.textContent = 'Pedido confirmado.';
+});
+
+// Aquí regreso a los productos después de terminar el pedido.
+document.getElementById('finalizar-compra').addEventListener('click', function () {
+    ventanaCarrito.close();
+    mostrarPaso('carrito');
+    document.getElementById('productos').scrollIntoView();
+});
+
+// Aquí preparo la página para que el carrito se vea desde el inicio.
+document.getElementById('abrir-carrito-flotante').hidden = false;
+actualizarCarrito();
